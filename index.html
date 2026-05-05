@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IronHaven Gym | Train Like a Titan</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body{
+            font-family: 'Inter', sans-serif;
+            background-color: #0b0c10;
+            color: #e0e0e0;
+            scroll-behavior: smooth;
+        }
+
+        ::-webkit-scrollbar{
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track{
+            background: #1f1f2b;
+        }
+        ::-webkit-scrollbar-thumb{
+            background: #e25822;
+            border-radius: 10px;
+        }
+
+        :root{
+            --primary: #e25822;
+            --primary-dark: #c0401a;
+            --dark-bg: #0a0b10;
+            --card-bg: #14161f;
+            --card-border: #2a2c38;
+        }
+
+        header{
+            background: rgba(10,11,16,0.92);
+            backdrop-filter: blur(12px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid rgba(226,88,34,0.3);
+            padding: 0.8rem 2rem;
+        }
+
+        .nav-container{
+            max-width: 1300px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .logo{
+            font-size: 1.8rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+        }
+        .logo span{
+            color: var(--primary);
+        }
+        .nav-links{
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+        .nav-links a{
+            text-decoration: none;
+            color: #f0f0f0;
+            font-weight: 500;
+            transition: 0.2s;
+            font-size: 1rem;
+        }
+        .nav-links a:hover, .nav-links a.active{
+            color: var(--primary);
+        }
+        .menu-toggle{
+            display: none;
+            font-size: 1.8rem;
+            cursor: pointer;
+            color: white;
+        }
+
+        .btn-primary{
+            background: var(--primary);
+            border: none;
+            color: white;
+            padding: 12px 28px;
+            font-weight: 700;
+            border-radius: 40px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-family: inherit;
+            font-size: 0.95rem;
+            box-shadow: 0 5px 12px rgba(226,88,34,0.3);
+        }
+        .btn-primary:hover{
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 18px rgba(226,88,34,0.4);
+        }
+        .btn-outline{
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+            padding: 10px 24px;
+            font-weight: 600;
+            border-radius: 40px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .btn-outline:hover{
+            background: var(--primary);
+            color: white;
+        }
+
+        .hero{
+            background: linear-gradient(135deg, #0a0c16 0%, #10121f 100%);
+            padding: 5rem 2rem 6rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero::before{
+            content: "";
+            font-size: 15rem;
+            opacity: 0.03;
+            position: absolute;
+            bottom: -50px;
+            right: -30px;
+            pointer-events: none;
+            font-weight: 900;
+        }
+        .hero-content{
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .hero h1{
+            font-size: 3.8rem;
+            font-weight: 800;
+            background: linear-gradient(120deg, #fff, #e25822);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            margin-bottom: 1.2rem;
+        }
+        .hero p{
+            font-size: 1.2rem;
+            line-height: 1.5;
+            color: #bcbcbc;
+            margin-bottom: 2rem;
+        }
+        .hero-buttons{
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .container{
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 3.5rem 2rem;
+        }
+        .section-title{
+            font-size: 2.3rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+        .section-title span{
+            color: var(--primary);
+        }
+
+        .features-grid{
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 2rem;
+        }
+        .feature-card{
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 28px;
+            padding: 2rem 1.5rem;
+            text-align: center;
+            transition: transform 0.2s, border-color 0.2s;
+        }
+        .feature-card:hover{
+            transform: translateY(-6px);
+            border-color: var(--primary);
+        }
+        .feature-icon{
+            font-size: 2.8rem;
+            color: var(--primary);
+            margin-bottom: 1.2rem;
+        }
+        .feature-card h3{
+            font-size: 1.5rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .pricing-grid{
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 2rem;
+        }
+        .pricing-card{
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 32px;
+            padding: 2rem 1.8rem;
+            width: 300px;
+            text-align: center;
+            transition: all 0.2s;
+        }
+        .pricing-card.popular{
+            border: 2px solid var(--primary);
+            position: relative;
+            background: #181c2a;
+        }
+        .popular-badge{
+            position: absolute;
+            top: -14px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--primary);
+            padding: 4px 18px;
+            border-radius: 60px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            color: white;
+        }
+        .price{
+            font-size: 2.8rem;
+            font-weight: 800;
+            margin: 1rem 0;
+        }
+        .price span{
+            font-size: 1rem;
+            font-weight: 400;
+        }
+        .pricing-card ul{
+            list-style: none;
+            margin: 1.5rem 0;
+        }
+        .pricing-card li{
+            margin: 0.8rem 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            justify-content: center;
+        }
+        .pricing-card li i{
+            color: var(--primary);
+            width: 20px;
+        }
+
+        .schedule-wrapper{
+            background: var(--card-bg);
+            border-radius: 32px;
+            padding: 1rem;
+            overflow-x: auto;
+            border: 1px solid var(--card-border);
+        }
+        .schedule-table{
+            width: 100%;
+            border-collapse: collapse;
+            text-align: center;
+        }
+        .schedule-table th, .schedule-table td{
+            padding: 1rem 0.7rem;
+            border-bottom: 1px solid #2f323f;
+        }
+        .schedule-table th{
+            color: var(--primary);
+            font-weight: 600;
+        }
+        .class-badge{
+            background: #2a2c38;
+            padding: 5px 14px;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .modal{
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.8);
+            backdrop-filter: blur(5px);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        .modal-content{
+            background: #181d2b;
+            max-width: 450px;
+            width: 90%;
+            border-radius: 32px;
+            padding: 2rem;
+            border: 1px solid var(--primary);
+            position: relative;
+            animation: fadeUp 0.2s ease;
+        }
+        @keyframes fadeUp{
+            from{ transform: translateY(20px); opacity: 0; }
+            to{ transform: translateY(0px); opacity: 1; }
+        }
+        .close-modal{
+            position: absolute;
+            top: 1rem;
+            right: 1.5rem;
+            font-size: 1.8rem;
+            cursor: pointer;
+            color: #aaa;
+        }
+        .form-group{
+            margin-bottom: 1.2rem;
+        }
+        .form-group input{
+            width: 100%;
+            padding: 12px 15px;
+            border-radius: 60px;
+            border: 1px solid #333;
+            background: #0f121f;
+            color: white;
+            font-size: 1rem;
+            outline: none;
+        }
+        .form-group input:focus{
+            border-color: var(--primary);
+        }
+        .success-msg{
+            background: #1e3a2f;
+            padding: 10px;
+            border-radius: 30px;
+            text-align: center;
+            margin-top: 1rem;
+            color: #8effb2;
+        }
+        footer{
+            background: #06070c;
+            text-align: center;
+            padding: 2rem;
+            border-top: 1px solid #23252e;
+            margin-top: 2rem;
+        }
+        @media (max-width: 780px){
+            .nav-links{
+                display: none;
+                width: 100%;
+                flex-direction: column;
+                text-align: center;
+                padding: 1rem 0;
+                gap: 1rem;
+            }
+            .nav-links.show{
+                display: flex;
+            }
+            .menu-toggle{
+                display: block;
+            }
+            .hero h1{
+                font-size: 2.5rem;
+            }
+            .container{
+                padding: 2rem 1.5rem;
+            }
+            .section-title{
+                font-size: 1.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="nav-container">
+            <div class="logo">IRON<span>HAVEN</span></div>
+            <div class="menu-toggle" id="mobile-menu">
+                <i class="fas fa-bars"></i>
+            </div>
+            <ul class="nav-links" id="nav-links">
+                <li><a href="#home" class="nav-link" data-link="home">Home</a></li>
+                <li><a href="#features" class="nav-link" data-link="features">Why Us</a></li>
+                <li><a href="#pricing" class="nav-link" data-link="pricing">Pricing</a></li>
+                <li><a href="#schedule" class="nav-link" data-link="schedule">Classes</a></li>
+                <li><a href="#" id="join-btn-nav" class="btn-outline" style="padding: 6px 18px;">Join Now</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <main>
+        <section id="home">
+            <div class="hero">
+                <div class="hero-content">
+                    <h1>SCULPT . GRIND . DOMINATE</h1>
+                    <p>Elite coaching, premium equipment, and a brotherhood that fuels transformation. Your strongest chapter starts at IronHaven.</p>
+                    <div class="hero-buttons">
+                        <button class="btn-primary" id="hero-join-btn">Start 7-Day Trial <i class="fas fa-arrow-right"></i></button>
+                        <button class="btn-outline" id="explore-btn">Explore Classes</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="features">
+            <div class="container">
+                <div class="section-title">Why <span>IronHaven</span> ?</div>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon"><i class="fas fa-dumbbell"></i></div>
+                        <h3>State-of-the-art Gear</h3>
+                        <p>Eleiko plates, Technogym treadmills, and dedicated power racks.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon"><i class="fas fa-heartbeat"></i></div>
+                        <h3>Expert Coaches</h3>
+                        <p>Certified personal trainers & sport scientists to optimize your plan.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon"><i class="fas fa-users"></i></div>
+                        <h3>Community Vibe</h3>
+                        <p>Group workouts, challenges & recovery zone with sauna.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon"><i class="fas fa-calender-alt"></i></div>
+                        <h3>24/7 Access</h3>
+                        <p>Unlimited gym access, plus high-energy classes daily.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="pricing">
+            <div class="container">
+                <div class="section-title">Membership <span>Plans</span></div>
+                <div class="pricing-grid">
+                    <div class="pricing-card">
+                        <h3>BASIC</h3>
+                        <div class="price">39<span>/mo</span></div>
+                        <ul>
+                            <li><i class="fas fa-check-circle"></i> Gym access 6am-11pm</li>
+                            <li><i class="fas fa-check-circle"></i> Locker & shower</li>
+                            <li><i class="fas fa-check-circle"></i> 2 Guest passes/month</li>
+                            <li><i class="fas fa-times-circle" style="color:#555;"></i> Group classes</li>
+                        </ul>
+                        <button class="btn-outline price-join" data-plan="Basic">Choose Basic</button>
+                    </div>
+                    <div class="pricing-card popular">
+                        <div class="popular-badge">MOST POPULAR</div>
+                        <h3>ELITE</h3>
+                        <div class="price">69<span>/mo</span></div>
+                        <ul>
+                            <li><i class="fas fa-check-circle"></i> 24/7 Full Access</li>
+                            <li><i class="fas fa-check-circle"></i> Unlimited Classes</li>
+                            <li><i class="fas fa-check-circle"></i> 1 PT session/month</li>
+                            <li><i class="fas fa-check-circle"></i> Sauna & recovery</li>
+                        </ul>
+                        <button class="btn-outline price-join" data-plan="Elite">Join Elite</button>
+                    </div>
+                    <div class="pricing-card">
+                        <h3>UNLIMITED</h3>
+                        <div class="price">99<span>/mo</span></div>
+                        <ul>
+                            <li><i class="fas fa-check-circle"></i> All Elite benefits</li>
+                            <li><i class="fas fa-check-circle"></i> 4 PT sessions/month</li>
+                            <li><i class="fas fa-check-circle"></i> Nutrition plan</li>
+                            <li><i class="fas fa-check-circle"></i> +1 Free merch kit</li>
+                        </ul>
+                        <button class="btn-outline price-join" data-plan="Unlimited">Go Unlimited</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="schedule">
+            <div class="container">
+                <div class="section-title">Weekly <span>Classes</span></div>
+                <div class="schedule-wrapper">
+                    <table class="schedule-table">
+                        <thead>
+                            <tr><th>Time / Day</th><th>Monday</th><th>Wednesday</th><th>Friday</th><th>Saturday</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td><strong>7:00 AM</strong></td><td><span class="class-badge"><i class="fas fa-fire"></i> HIIT Blast</span></td><td>Yoga Flow</td><td>Strength Camp</td><td>Bootcamp</td></tr>
+                            <tr><td><strong>12:00 PM</strong></td><td> Core & Abs</td><span class="calss-badge">Boxing</span></td><td>Mobility</td><td>Open Gym</td></tr>
+                            <tr><td><strong>6:00 PM</strong></td><td> Powerlifting</td><span class="class-badge"><i class="fas fa-bicycle"></i> Spin Cycle</span></td><td>Crossfit WOD</td><td>Kettlebell</td></tr>
+                            <tr><td><strong>7:30 PM</strong></td><td> Zumba</td><td>Muay Thai</td><td>Yoga Night</td><td>Team Challenge</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p style="text-align: center; margin-top: 1.4rem; font-size: 0.85rem;">*All classes included in ELITE & UNLIMITED plans. Drop-in 15.</p>
+            </div>
+        </section>
+    </main>
+
+    <div id="membershipModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2 style="margin-bottom: 1rem;">Get <span style="color: var(--primary);">IronHaven</span> Access</h2>
+            <p style="margin-bottom: 1.2rem;">Select plan: <strong id="selectedPlanDisplay">Basic</strong></p>
+            <form id="memberForm">
+                <div class="form-group">
+                    <input type="text" id="fullname" placeholder="Full name" required>
+                </div>
+                <div class="form-group">
+                    <input type="email" id="email" placeholder="Email address" required>
+                </div>
+                <div class="form-group">
+                    <input type="tel" id="phone" placeholder="Phone number">
+                </div>
+                <input type="hidden" id="planHidden" value="Basic">
+                <button type="submit" class="btn-primary" style="width: 100%;">Chain Membership</button>
+                <div id="formMessage"></div>
+            </form>
+        </div>
+    </div>
+
+    <footer>
+        <p>2025 IronHaven Gym - Forge your legacy. | <i class="fas fa-map-marker-alt"></i> 1120 Fitness Ave, Mumbai <br> 
+        <i class="fab fa-instagram"></i> @ironhaven | <i class="fab fa-twitter"></i> @ironhaven</p>
+    </footer>
+
+    <script>
+        const mobileToggle = document.getElementById('mobile-menu');
+        const navLinks = document.getElementById('nav-links');
+        const modal = document.getElementById('membershipModal');
+        const closeModalBtn = document.querySelector('.close-modal');
+        const selectedPlanSpan = document.getElementById('selectedPlanDisplay');
+        const planHiddenInput = document.getElementById('planHidden');
+        const memberForm = document.getElementById('memberForm');
+        const formMessageDiv = document.getElementById('formMessage');
+
+        let currentPlan = "Basic";
+
+        function openMembershipModal(planName){
+            currentPlan = planName;
+            selectedPlanSpan.innerText = currentPlan;
+            planHiddenInput.value = currentPlan;
+            formMessageDiv.innerHTML = '';
+            modal.style.display = 'flex';
+        }
+
+        const priceJoinBtns = document.querySelectorAll('.price-join');
+        priceJoinBtns.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const plan = btn.getAttribute('data-plan');
+                openMembershipModal(plan);
+            });
+        });
+
+        const heroJoinBtn = document.getElementById('hero-join-btn');
+        if(heroJoinBtn) heroJoinBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            openMembershipModal("Elite");
+        });
+
+        const exploreBtn = document.getElementById('explore-btn');
+        if(exploreBtn) {
+            exploreBtn.addEventListener('click', () => {
+                document.getElementById('schedule').scrollIntoView({ behavior: 'smooth' });
+            });
+        }
+
+        closeModalBtn.addEventListener('click', () => {
+            modal.style.display = 'none';
+        });
+        window.addEventListener('click', (e) => {
+            if(e.target === modal) modal.style.display = 'none';
+        });
+
+        memberForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const fullname = document.getElementById('fulllname').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const phone = document.getElementById('phone').value.trim();
+            const selectedPlan = planHiddenInput.value;
+
+            if(!fullname || !email) {
+                formMessageDiv.innerHTML = '<div class="success-msg" style="background:#4a1e2e; color:#ffb3b3;"> Please fill name and email.</div>';
+                return;
+            }
+            if(!email.includes('@') || !email.includes('.')) {
+                formMessageDiv.innerHTML = '<div class="success-msg" style="background:#4a1e2e; color:#ffb3b3;"> Please fill name and email.</div>';
+                return;
+            }
+
+            formMessageDiv.innerHTML = `<div class="success-msg"> Thanks ${fullname}! Your ${selectedPlan} membership request is received. Our team will contact you within 24h.</div`;
+                memberForm.reset();
+
+                setTimeout(() => {
+                    if(modal.style.display === 'flex') modal.style.display = 'none';
+                    formMessageDiv.innerHTML = '';
+                }, 2800);
+        });
+
+        mobileToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('show');
+        });
+
+        const sections = ['home', 'features', 'pricing', 'schedule'];
+        const navItems = document.querySelectorAll('.nav-link');
+
+        function setActiveOnScroll() {
+            let current = '';
+            const scrollPos = window.scrollY + 120;
+            sections.forEach(sectionId => {
+                const section = document.getElementById(sectionId);
+                if(section) {
+                    const offsetTop = section.offsetTop;
+                    const offsetHeight = section.offsetHeight;
+                    if(scrollPos >= offsetTop && scrollPos < offsetTop + offsetHeight) {
+                        current = sectionId;
+                    }
+                }
+            });
+            navItems.forEach(link => {
+                link.classList.remove('active');
+                if(link.getAttribute('data-link') === current) {
+                    link.classList.add('active');
+                }
+            });
+        }
+
+        window.addEventListener('scroll', setActiveOnScroll);
+        setActiveOnScroll();
+
+        navItems.forEach(link => {
+            link.addEventListener('click', (e) => {
+                const targetId = link.getAttribute('data-link');
+                if(targetId) {
+                    e.preventDefault();
+                    const targetElem = document.getElementById(targetId);
+                    if(targetElem) {
+                        targetElem.scrollIntoView({ behavior: 'smooth' });
+                        if(navLinks.classList.contains('show')) navLinks.classList.remove('show');
+                    }
+                }
+            });
+        });
+
+        const scheduleLink = document.querySelector('a[href="#schedule"]');
+        if(scheduleLink) {
+            scheduleLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                document.getElementById('schedule').scrollIntoView({ behavior: 'smooth' });
+            });
+        }
+        console.log("IronHaven Gym - interactive experience ready");
+    </script>
+</body>
+</html>
